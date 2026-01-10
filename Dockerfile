@@ -10,16 +10,19 @@ RUN apt-get install -y libx11-xcb1
 # Set working directory
 WORKDIR /app
 
-RUN echo '{"dependencies": {"feed-me-up-scotty": "^1.10.0"}}' > ./package.json
+RUN echo '{"dependencies": {"feed-me-up-scotty": "1.10.0", "serve": "14.2.5"}}' > ./package.json
 
 # Install npm packages including Puppeteer
 RUN npm i
 
-# Expose port (adjust as needed)
 EXPOSE 8111
+
+# If you need to debug interactively, swap the CMD below with
+# CMD ["tail", "-f", "/dev/null"]
+# Then after building and running the container, run: `podman exec feed-me-up-scotty -it bash`
 
 # Start command (adjust based on your application)
 # 3600 is one hour in seconds
-# CMD ["watch", "-n", "3600", "npx", "feed-me-up-scotty"]
-# CMD ["/usr/bin/bash"]
-CMD ["tail", "-f", "/dev/null"]
+# -e is to exit watch if the command exits with a non-0 exit code
+# Using `&` to have them run in parallel
+CMD watch -n 3600 -e npx feed-me-up-scotty & npx serve -p 8111

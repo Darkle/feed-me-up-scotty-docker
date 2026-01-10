@@ -1,8 +1,8 @@
 - This is a dockerised version of [feed-me-up-scotty](https://feed-me-up-scotty.vincenttunru.com)
-- It also runs a static server to serve up the feeds. Default port is 8111
-
+- It also runs a static server to serve up the feeds. Default port is `8111`
 
 - Run with:
+
   - `docker build -t feed-me-up-scotty .`
 
   - ```sh

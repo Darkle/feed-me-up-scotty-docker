@@ -21,7 +21,7 @@ EXPOSE 8111
 # CMD ["tail", "-f", "/dev/null"]
 # Then after building and running the container, run: `podman exec feed-me-up-scotty -it bash`
 
-# Start command (adjust based on your application)
+# `watch` runs a command every n seconds.
 # 3600 is one hour in seconds
 # -e is to exit watch if the command exits with a non-0 exit code
 # Using `&` to have them run in parallel

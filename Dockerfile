@@ -15,7 +15,7 @@ RUN apt-get update && \
                     wget gnupg \
                     dbus dbus-x11 \
                     fonts-ipafont-gothic fonts-wqy-zenhei fonts-thai-tlwg fonts-freefont-ttf \
-                    chromium && \
+                    chromium curl && \
     rm -rf /var/lib/apt/lists/*
 
 
@@ -33,6 +33,9 @@ RUN bun install --production
 USER root
 
 EXPOSE 8111
+
+# `watch` needs a terminal
+ENV TERM=xterm
 
 # If you need to debug interactively, swap the CMD below with
 # CMD ["tail", "-f", "/dev/null"]

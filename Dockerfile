@@ -26,3 +26,4 @@ EXPOSE 8111
 # -e is to exit watch if the command exits with a non-0 exit code
 # Using `&` to have them run in parallel
 CMD watch -n 3600 -e npx feed-me-up-scotty & npx serve -p 8111
+# CMD watch -n 3600 -e npx feed-me-up-scotty && curl -fsS --retry 5 -o /dev/null $HEALTHCHECK_IO_URL & npx serve -p 8111

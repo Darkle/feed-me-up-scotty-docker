@@ -1,19 +1,36 @@
-FROM ghcr.io/puppeteer/puppeteer:24.34.0
-# From https://pptr.dev/guides/docker
+# https://github.com/philiplehmann/container/blob/main/apps/puppeteer/Dockerfile
 
-# For some reason we are missing the libx11-xcb1 library, so change back to root to install missing lib. 
-# Also need user to be root to fix issue with writing to public folder.
-USER root
+FROM oven/bun:1.3.5-slim
 
-RUN apt-get install -y libx11-xcb1
+ENV NODE_ENV=production
+ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
+ENV DBUS_SESSION_BUS_ADDRESS=autolaunch:
+ENV LANG=en_US.UTF-8
 
-# Set working directory
+
+RUN apt-get update && \
+    apt-get install --no-install-recommends --yes \
+                    libnss3 libatk1.0-0 libatk-bridge2.0-0 libcups2 libgbm1 libasound2 \
+                    libpangocairo-1.0-0 libxss1 libgtk-3-0 libgtk2.0-0 libdrm2 libxkbcommon0 \
+                    wget gnupg \
+                    dbus dbus-x11 \
+                    fonts-ipafont-gothic fonts-wqy-zenhei fonts-thai-tlwg fonts-freefont-ttf \
+                    chromium && \
+    rm -rf /var/lib/apt/lists/*
+
+
 WORKDIR /app
+
+RUN mkdir /app/chromium-data && \
+    chown -R 1000:1000 /app/chromium-data
+
+# COPY --chown=1000:1000 dist/apps/puppeteer puppeteer
 
 RUN echo '{"dependencies": {"feed-me-up-scotty": "1.10.0", "serve": "14.2.5"}}' > ./package.json
 
-# Install npm packages including Puppeteer
-RUN npm i
+RUN bun install --production 
+
+USER root
 
 EXPOSE 8111
 
@@ -25,5 +42,5 @@ EXPOSE 8111
 # 3600 is one hour in seconds
 # -e is to exit watch if the command exits with a non-0 exit code
 # Using `&` to have them run in parallel
-CMD watch -n 3600 -e npx feed-me-up-scotty & npx serve -p 8111
-# CMD watch -n 3600 -e npx feed-me-up-scotty && curl -fsS --retry 5 -o /dev/null $HEALTHCHECK_IO_URL & npx serve -p 8111
+CMD bunx serve -p 8111 & watch -n 3600 -e bunx feed-me-up-scotty
+# CMD bunx serve -p 8111 & watch -n 3600 -e bunx feed-me-up-scotty && curl -fsS --retry 5 -o /dev/null $HEALTHCHECK_IO_URL

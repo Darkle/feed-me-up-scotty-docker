@@ -28,7 +28,6 @@ CMD bunx serve -p 8111 & \
         if bunx feed-me-up-scotty; then \
             echo "feed-me-up-scotty completed build on $(date)"; \
             if [ -n "$HEALTHCHECK_IO_URL" ]; then \
-                echo "running curl"; \
                 curl -fsS --retry 5 -o /dev/null "$HEALTHCHECK_IO_URL"; \
             fi; \
         fi; \

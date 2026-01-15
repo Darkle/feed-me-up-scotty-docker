@@ -24,7 +24,7 @@ EXPOSE 8111
 # Using `&` to have them run in parallel
 CMD bunx serve -p 8111 & \
     while true; do \
-        # Only run curl if `bunx feed-me-up-scotty succeded && HEALTHCHECK_IO_URL env var set`
+        # Only run curl if `bunx feed-me-up-scotty` succeded && `HEALTHCHECK_IO_URL` env var set
         if bunx feed-me-up-scotty; then \
             echo "feed-me-up-scotty completed build on $(date)"; \
             if [ -n "$HEALTHCHECK_IO_URL" ]; then \

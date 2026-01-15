@@ -28,7 +28,7 @@
       feed-me-up-scotty
     ```
 
-- You can manually generate the feeds by running `docker exec feed-me-up-scotty bunx feed-me-up-scotty` or if using podman: `podman exec feed-me-up-scotty bunx feed-me-up-scotty`
+- The feeds are generated once an hour. If you need to manually generate them because you added a new page to the `feeds.toml` file, you can do that by running `docker exec feed-me-up-scotty bunx feed-me-up-scotty` or if using podman: `podman exec feed-me-up-scotty bunx feed-me-up-scotty`
   - It might be worth putting this in a bash script so you dont have to remember it. e.g.
     - ```bash
       #!/usr/bin/env bash

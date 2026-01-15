@@ -17,6 +17,7 @@
     ```
 
 - or with podman:
+
   - `podman build -t feed-me-up-scotty .`
   - ```sh
     podman run --restart always -d \
@@ -26,3 +27,10 @@
       -v /path/to/public:/app/public \
       feed-me-up-scotty
     ```
+
+- You can manually generate the feeds by running `docker exec feed-me-up-scotty bunx feed-me-up-scotty` or if using podman: `podman exec feed-me-up-scotty bunx feed-me-up-scotty`
+  - It might be worth putting this in a bash script so you dont have to remember it. e.g.
+    - ```bash
+      #!/usr/bin/env bash
+      podman exec feed-me-up-scotty bunx feed-me-up-scotty
+      ```

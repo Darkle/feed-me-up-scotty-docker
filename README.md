@@ -1,7 +1,7 @@
 - This is a dockerised version of [feed-me-up-scotty](https://feed-me-up-scotty.vincenttunru.com)
 - It also runs a static server to serve up the feeds (using [serve](https://github.com/vercel/serve)). Default port is `8111`
 
-- If you would like to be notified if feed building failed, you can run the `docker run` or `podman run` with the extra arg of `-e HEALTHCHECK_IO_URL=https://foo` with `https://foo` being the https://healthchecks.io check URL.
+- If you would like to be notified if feed building failed, you can run the `docker run` or `podman run` with the extra arg of `-e HEALTHCHECK_IO_URL=https://foo` with `https://foo` being the https://healthchecks.io check URL that you create.
 
 - Run with:
 
